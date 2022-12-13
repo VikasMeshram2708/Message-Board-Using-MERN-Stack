@@ -1,55 +1,38 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState, useCallback } from "react";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
-  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const api_uri = "http://localhost:5000/api/auth/createUser";
+  const formSubmitted = useCallback(
+    (event) => {
+      event.preventDefault();
+      const data = [
+        {
+          name,
+          email,
+          password,
+        },
+      ];
+      console.log(data);
+    },
+    [name, email, password]
+  );
 
-  const formSubmitted = async (event) => {
-    event.preventDefault();
-    const data = {
-      name,
-      email,
-      password,
-    };
-    // console.log(data);
-    setName("");
-    setEmail("");
-    setPassword("");
-
-    const response = await fetch(api_uri, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    const json = await response.json();
-    // console.log(json);
-    if (response.status === 200) {
-      alert("User Sign Up Success 👍");
-      navigate("/signIn");
-    }
-    if (response.status === 422) {
-      alert("User Already Exist 😠");
-    }
-  };
   return (
     <>
       <form
-        className="mt-5 p-4 p-md-5 border rounded-3 bg-light container"
         onSubmit={formSubmitted}
+        className="p-4 p-md-5 border rounded-3 bg-light container mt-5"
       >
-        <div className="fomr-label">
+        <div className="form-label">
           <h3>Sign Up</h3>
         </div>
         <div className="form-floating mb-3">
           <input
-            type="name"
+            type="text"
             className="form-control"
             id="name"
             value={name}
@@ -58,7 +41,7 @@ const SignUp = () => {
             }}
             placeholder="name"
           />
-          <label htmlFor="floatingInput">Name</label>
+          <label htmlFor="floatingInput">Name </label>
         </div>
         <div className="form-floating mb-3">
           <input
@@ -86,9 +69,11 @@ const SignUp = () => {
           />
           <label htmlFor="floatingPassword">Password</label>
         </div>
-        <div className="mb-3">
+        <div className=" mb-3">
           <label>
-            <Link to="/signIn">Already User</Link>
+            <Link className="cursor-pointer" role="button" to={"/"}>
+              Already a User
+            </Link>
           </label>
         </div>
         <button className="w-100 btn btn-lg btn-primary" type="submit">

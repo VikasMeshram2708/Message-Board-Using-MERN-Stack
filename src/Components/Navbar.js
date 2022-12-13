@@ -1,47 +1,35 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const Navbar = () => {
-  const navigate = useNavigate();
-  const handleUser = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-  };
-  // const userId = localStorage.getItem("id");
-  //   !userId?return on specific navlinks : return all nav links
+const Navbar = (props) => {
   return (
     <>
-      <nav className="p-3 navbar navbar-expand-lg bg-dark navbar-dark">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
-            Message Board
+            {props.title}
           </Link>
           <button
             className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
+            data-bs-target="#navbarColor01"
+            aria-controls="navbarColor01"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+          <div className="collapse navbar-collapse" id="navbarColor01">
+            <ul className="navbar-nav me-auto">
               <li className="nav-item">
-                <Link className="nav-link" aria-current="page" to="/message">
-                  Message Center
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/dashboard">
-                  Dashboard
+                <Link className="nav-link" to="/message">
+                  Message
                 </Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/about">
-                  About
+                  About Us
                 </Link>
               </li>
               <li className="nav-item">
@@ -50,43 +38,32 @@ const Navbar = () => {
                 </Link>
               </li>
             </ul>
-            {!localStorage.getItem("token") ? (
-              <form className="d-flex" role="search">
+            {props.searchBar ? (
+              <form className="d-flex">
+                <input
+                  className="form-control me-sm-2"
+                  type="search"
+                  placeholder="Search"
+                />
                 <button
-                  className="btn btn-primary mx-2"
-                  to="/signUp"
-                  type="button"
-                  onClick={() => {
-                    navigate("/signUp");
-                  }}
+                  className="btn btn-secondary my-2 my-sm-0"
+                  type="submit"
                 >
-                  Sign Up
-                </button>
-                <button
-                  className="btn btn-danger"
-                  to="/signIn"
-                  type="button"
-                  onClick={() => {
-                    navigate("/signIn");
-                  }}
-                >
-                  Sign In
+                  Search
                 </button>
               </form>
             ) : (
-              <button
-                type="button                                                                                                                                                                                                                                                                                                                                                                                                  "
-                className="btn btn-danger fs-5"
-                onClick={handleUser}
-              >
-                Logout
-              </button>
+              ""
             )}
           </div>
         </div>
       </nav>
     </>
   );
+};
+
+Navbar.defaultProps = {
+  title: "Message Board",
 };
 
 export default Navbar;

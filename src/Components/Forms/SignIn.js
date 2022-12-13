@@ -1,58 +1,31 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState, useCallback } from "react";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
-  const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const api_uri = "http://localhost:5000/api/auth/userLogin";
+  const formSubmitted = useCallback(
+    (event) => {
+      event.preventDefault();
+      const data = [
+        {
+          email,
+          password,
+        },
+      ];
+      console.log(data);
+    },
+    [email, password]
+  );
 
-  const formSubmitted = async (event) => {
-    event.preventDefault();
-    const data = {
-      email,
-      password,
-    };
-    // console.log(data);
-    setEmail("");
-    setPassword("");
-
-    const response = await fetch(api_uri, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // "token":response
-      },
-      body: JSON.stringify(data),
-    });
-    const json = await response.json();
-    // console.log(json);
-
-    const { token } = json;
-    // console.log(token);
-    if (response.status === 200) {
-      alert("User Sign In Success 👍");
-      localStorage.setItem("token", token);
-      navigate("/message");
-      // navigate("/dashboard");
-    }
-    if (response.status === 404) {
-      alert("Try to login with valid credentials 😠");
-    }
-    if (response.status === 422) {
-      alert("User Doesn't Exist 😠");
-      navigate("/signUp");
-    }
-  };
   return (
     <>
       <form
         onSubmit={formSubmitted}
-        className="mt-5 p-4 p-md-5 border rounded-3 bg-light container"
+        className="p-4 p-md-5 border rounded-3 bg-light container mt-5"
       >
-        <div className="form-lable">
+        <div className="form-label">
           <h3>Sign In</h3>
         </div>
         <div className="form-floating mb-3">
@@ -72,7 +45,7 @@ const SignIn = () => {
           <input
             type="password"
             className="form-control"
-            id="password"
+            id="pasword"
             value={password}
             onChange={(event) => {
               setPassword(event.target.value);
@@ -81,14 +54,20 @@ const SignIn = () => {
           />
           <label htmlFor="floatingPassword">Password</label>
         </div>
-        <div className=" mb-3">
+        <div className="checkbox mb-3">
           <label>
-            <Link to="/signUp">Not a User</Link>
+            <Link className="cursor-pointer" role="button" to={"/"}>
+              New User
+            </Link>
           </label>
         </div>
         <button className="w-100 btn btn-lg btn-primary" type="submit">
           Sign In
         </button>
+        <hr className="my-4" />
+        <small className="text-muted">
+          By clicking Sign up, you agree to the terms of use.
+        </small>
       </form>
     </>
   );
