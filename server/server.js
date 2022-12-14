@@ -4,8 +4,10 @@ require("dotenv").config();
 const port = process.env.PORT;
 const volleyball = require("volleyball");
 const helmet = require("helmet");
+const cors = require("cors");
 
 // middlewares
+app.use(cors());
 app.use(express.json());
 app.use(helmet());
 app.use(volleyball);

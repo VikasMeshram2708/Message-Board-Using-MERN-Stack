@@ -1,20 +1,41 @@
 import React, { useState, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
+  const navigate = useNavigate("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const SIGN_In_API = "http://localhost:5000/api/v1/signIn";
+
   const formSubmitted = useCallback(
-    (event) => {
+    async (event) => {
       event.preventDefault();
-      const data = [
-        {
-          email,
-          password,
-        },
-      ];
+      const data = {
+        email,
+        password,
+      };
+
       console.log(data);
+      const response = await fetch(SIGN_In_API, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const json = await response.json();
+      console.log(json);
+      if (response.status === 422) {
+        alert("Try to Sign with valid credentails invalid password");
+      }
+      if (response.status === 404) {
+        alert("Try to login with valid credentails email not found");
+      }
+      if (response.status === 201) {
+        alert("User Created");
+        navigate("/message");
+      }
     },
     [email, password]
   );

@@ -83,7 +83,7 @@ router.post("/signIn", async (req, res) => {
         token: authToken,
       });
     }
-    return res.status(422).json({
+    return res.status(404).json({
       message: "Try to sing with valid credentails",
     });
   } catch (error) {

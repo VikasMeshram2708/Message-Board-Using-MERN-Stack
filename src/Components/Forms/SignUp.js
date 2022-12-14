@@ -1,22 +1,41 @@
 import React, { useState, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const SIGN_UP_API = "http://localhost:5000/api/v1/signUp";
   const formSubmitted = useCallback(
-    (event) => {
+    async (event) => {
       event.preventDefault();
-      const data = [
-        {
-          name,
-          email,
-          password,
-        },
-      ];
+      const data = {
+        name,
+        email,
+        password,
+      };
       console.log(data);
+      const response = await fetch(SIGN_UP_API, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const json = await response.json();
+      console.log(json);
+      if (response.status === 422) {
+        alert("Try to Sign with valid credentails email already exist");
+      }
+      if (response.status === 500) {
+        alert("Email must be a valid email");
+      }
+      if (response.status === 201) {
+        alert("User Created");
+        navigate("/signIn");
+      }
     },
     [name, email, password]
   );
