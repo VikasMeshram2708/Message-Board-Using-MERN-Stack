@@ -21,7 +21,7 @@ const Message = () => {
         content: message,
       },
     ]);
-    console.log(newMessage);
+    // console.log(newMessage);
   };
 
   useEffect(() => {
@@ -54,16 +54,7 @@ const Message = () => {
         >
           Send Message
         </button>
-        <button
-          className="btn btn-outline-secondary w-100 mt-2"
-          type="submit"
-          onClick={() => {
-            localStorage.clear();
-            window.location.reload();
-          }}
-        >
-          Logout
-        </button>
+
         <ul className="mt-5 fs-5">
           {newMessage.map((items) => {
             return <li key={items.id}>{items.content}</li>;

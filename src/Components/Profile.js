@@ -18,7 +18,6 @@ const Profile = () => {
       },
     });
     const json = await response.json();
-    console.log(json);
     setName(json.name);
     setEmail(json.email);
   };
@@ -27,8 +26,7 @@ const Profile = () => {
     if (!localStorage.getItem("token")) {
       navigate("/");
     }
-    fetchUser();
-  }, []);
+  }, [fetchUser]);
   return (
     <>
       <section className="vh-100" style={{ backgroundColor: "#9de2ff" }}>

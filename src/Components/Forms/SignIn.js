@@ -16,7 +16,7 @@ const SignIn = () => {
         password,
       };
 
-      console.log(data);
+      // console.log(data);
       const response = await fetch(SIGN_In_API, {
         method: "POST",
         body: JSON.stringify(data),
@@ -25,7 +25,7 @@ const SignIn = () => {
         },
       });
       const json = await response.json();
-      console.log(json);
+      // console.log(json);
       if (response.status === 422) {
         alert("Try to Sign with valid credentails invalid password");
       }
@@ -37,6 +37,7 @@ const SignIn = () => {
         const { token } = json;
         navigate("/message");
         localStorage.setItem("token", token);
+        window.location.reload();
         // localStorage
         // console.log(token);
       }

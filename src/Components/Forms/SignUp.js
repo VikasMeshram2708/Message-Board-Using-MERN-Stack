@@ -16,7 +16,7 @@ const SignUp = () => {
         email,
         password,
       };
-      console.log(data);
+      // console.log(data);
       const response = await fetch(SIGN_UP_API, {
         method: "POST",
         body: JSON.stringify(data),
@@ -25,7 +25,7 @@ const SignUp = () => {
         },
       });
       const json = await response.json();
-      console.log(json);
+      // console.log(json);
       if (response.status === 422) {
         alert("Try to Sign with valid credentails email already exist");
       }
