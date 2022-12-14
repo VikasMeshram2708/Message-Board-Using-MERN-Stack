@@ -39,7 +39,7 @@ router.post("/signUp", async (req, res) => {
       });
       return res.status(201).json({
         message: "User Created",
-        data: created,
+        // data: created,
         token: authToken,
       });
     }
@@ -79,7 +79,7 @@ router.post("/signIn", async (req, res) => {
       });
       return res.status(201).json({
         message: "User logged in Success",
-        data: user,
+        // data: user,
         token: authToken,
       });
     }

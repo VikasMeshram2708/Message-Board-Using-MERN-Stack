@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Message = () => {
+  const navigate = useNavigate("");
   const [message, setMessage] = useState("");
   const [newMessage, setNewMessage] = useState([]);
 
@@ -21,6 +23,12 @@ const Message = () => {
     ]);
     console.log(newMessage);
   };
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <>
@@ -45,6 +53,16 @@ const Message = () => {
           onClick={AddMessage}
         >
           Send Message
+        </button>
+        <button
+          className="btn btn-outline-secondary w-100 mt-2"
+          type="submit"
+          onClick={() => {
+            localStorage.clear();
+            window.location.reload();
+          }}
+        >
+          Logout
         </button>
         <ul className="mt-5 fs-5">
           {newMessage.map((items) => {

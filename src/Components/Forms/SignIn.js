@@ -33,8 +33,12 @@ const SignIn = () => {
         alert("Try to login with valid credentails email not found");
       }
       if (response.status === 201) {
-        alert("User Created");
+        alert("User Logged In");
+        const { token } = json;
         navigate("/message");
+        localStorage.setItem("token", token);
+        // localStorage
+        // console.log(token);
       }
     },
     [email, password]

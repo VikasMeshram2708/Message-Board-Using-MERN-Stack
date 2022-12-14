@@ -23,9 +23,13 @@ const Navbar = (props) => {
           <div className="collapse navbar-collapse" id="navbarColor01">
             <ul className="navbar-nav me-auto">
               <li className="nav-item">
-                <Link className="nav-link" to="/message">
-                  Message
-                </Link>
+                {localStorage.getItem("token") ? (
+                  <Link className="nav-link" to="/message">
+                    Message
+                  </Link>
+                ) : (
+                  ""
+                )}
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/about">
@@ -37,6 +41,15 @@ const Navbar = (props) => {
                   Contact Us
                 </Link>
               </li>
+              {localStorage.getItem("token") ? (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/profile">
+                    Profile
+                  </Link>
+                </li>
+              ) : (
+                ""
+              )}
             </ul>
             {props.searchBar ? (
               <form className="d-flex">

@@ -19,22 +19,26 @@ const Home = (props) => {
         <div className="col-lg-6">
           <h1 className="display-5 fw-bold lh-1 mb-3">{props.title}</h1>
           <p className="lead">{props.description}</p>
-          <div className="d-grid gap-2 d-md-flex justify-content-md-start">
-            <button
-              type="button"
-              className="btn btn-primary btn-lg px-4 me-md-2"
-              onClick={() => navigate("/signUp")}
-            >
-              {props.btnTitle}
-            </button>
-            <button
-              type="button"
-              className="btn btn-outline-secondary btn-lg px-4"
-              onClick={() => navigate("/signIn")}
-            >
-              {props.btnTitle2}
-            </button>
-          </div>
+          {!localStorage.getItem("token") ? (
+            <div className="d-grid gap-2 d-md-flex justify-content-md-start">
+              <button
+                type="button"
+                className="btn btn-primary btn-lg px-4 me-md-2"
+                onClick={() => navigate("/signUp")}
+              >
+                {props.btnTitle}
+              </button>
+              <button
+                type="button"
+                className="btn btn-outline-secondary btn-lg px-4"
+                onClick={() => navigate("/signIn")}
+              >
+                {props.btnTitle2}
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>
